@@ -1,0 +1,57 @@
+[
+    {
+        "id": "f88c014770fffa18",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "94c934a385aaae34",
+        "type": "global-config",
+        "env": [
+            {
+                "name": "API_BASE_URL",
+                "value": "https://api.jolpi.ca/ergast/f1",
+                "type": "str"
+            },
+            {
+                "name": "CURRENT_SEASON",
+                "value": "2025",
+                "type": "str"
+            },
+            {
+                "name": "REQUEST_LIMIT",
+                "value": "30",
+                "type": "str"
+            },
+            {
+                "name": "CACHE_DURATION",
+                "value": "300000",
+                "type": "num"
+            }
+        ],
+        "modules": {}
+    },
+    {
+        "id": "0d36c34a1feaf846",
+        "type": "comment",
+        "z": "f88c014770fffa18",
+        "name": "Caupolicán Ré",
+        "info": "",
+        "x": 200,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "e202e688a1931748",
+        "type": "comment",
+        "z": "f88c014770fffa18",
+        "name": "ENV_VARS",
+        "info": "VARIABLES DE ENTORNO:\n- API_BASE_URL: URL base de la API jolpica-f1\n- CURRENT_SEASON: Temporada actual por defecto\n- REQUEST_LIMIT: Límite de resultados por request\n- CACHE_DURATION: Duración del caché en ms (5 min)",
+        "x": 190,
+        "y": 280,
+        "wires": []
+    }
+]
