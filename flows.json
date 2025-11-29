@@ -100,32 +100,32 @@
     {
         "id": "c90405128576a103",
         "type": "ui-page",
-        "name": "Page 1",
+        "name": "Dashboard",
         "ui": "49208b2957f9d1f6",
-        "path": "/page1",
+        "path": "/home",
         "icon": "home",
         "layout": "grid",
         "theme": "185767feb2ec6bb6",
         "breakpoints": [
             {
                 "name": "Default",
-                "px": 0,
-                "cols": 3
+                "px": "0",
+                "cols": "3"
             },
             {
                 "name": "Tablet",
-                "px": 576,
-                "cols": 6
+                "px": "576",
+                "cols": "6"
             },
             {
                 "name": "Small Desktop",
-                "px": 768,
-                "cols": 9
+                "px": "768",
+                "cols": "9"
             },
             {
                 "name": "Desktop",
-                "px": 1024,
-                "cols": 12
+                "px": "1024",
+                "cols": "12"
             }
         ],
         "order": 1,
@@ -136,15 +136,29 @@
     {
         "id": "734bf468c0c53ee3",
         "type": "ui-group",
-        "name": "Group 1",
+        "name": "Control Panel",
         "page": "c90405128576a103",
         "width": 6,
         "height": 1,
         "order": 1,
         "showTitle": true,
         "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "ff59f358f3a6cead",
+        "type": "ui-group",
+        "name": "Rankings",
+        "page": "c90405128576a103",
+        "width": 6,
+        "height": 1,
+        "order": 2,
+        "showTitle": true,
+        "className": "",
         "visible": true,
-        "disabled": false,
+        "disabled": "false",
         "groupType": "default"
     },
     {
@@ -154,7 +168,7 @@
         "name": "Caupolicán Ré",
         "info": "",
         "x": 200,
-        "y": 220,
+        "y": 260,
         "wires": []
     },
     {
@@ -163,8 +177,8 @@
         "z": "f88c014770fffa18",
         "name": "ENV_VARS",
         "info": "VARIABLES DE ENTORNO:\n- API_BASE_URL: URL base de la API jolpica-f1\n- CURRENT_SEASON: Temporada actual por defecto\n- REQUEST_LIMIT: Límite de resultados por request\n- CACHE_DURATION: Duración del caché en ms (5 min)",
-        "x": 190,
-        "y": 280,
+        "x": 490,
+        "y": 260,
         "wires": []
     },
     {
@@ -184,7 +198,7 @@
         "topic": "",
         "payload": "iso",
         "payloadType": "date",
-        "x": 230,
+        "x": 210,
         "y": 360,
         "wires": [
             [
@@ -204,10 +218,12 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 500,
+        "x": 560,
         "y": 360,
         "wires": [
-            []
+            [
+                "835975d334beda51"
+            ]
         ]
     },
     {
@@ -215,8 +231,8 @@
         "type": "ui-dropdown",
         "z": "f88c014770fffa18",
         "group": "734bf468c0c53ee3",
-        "name": "",
-        "label": "Select Option:",
+        "name": "Selector: F1 Season",
+        "label": "Season",
         "tooltip": "",
         "order": 1,
         "width": 0,
@@ -227,8 +243,9 @@
         "clearable": false,
         "options": [
             {
-                "value": "",
-                "label": ""
+                "label": "options",
+                "value": "msg",
+                "type": "str"
             }
         ],
         "payload": "",
@@ -237,8 +254,262 @@
         "className": "",
         "typeIsComboBox": true,
         "msgTrigger": "onChange",
-        "x": 740,
+        "x": 820,
         "y": 360,
+        "wires": [
+            [
+                "1a86e92046fd35d7"
+            ]
+        ]
+    },
+    {
+        "id": "1a86e92046fd35d7",
+        "type": "change",
+        "z": "f88c014770fffa18",
+        "name": "Save Selected Season",
+        "rules": [
+            {
+                "t": "set",
+                "p": "selectedSeason",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1060,
+        "y": 360,
+        "wires": [
+            [
+                "674bb2e6647b06e5"
+            ]
+        ]
+    },
+    {
+        "id": "674bb2e6647b06e5",
+        "type": "link out",
+        "z": "f88c014770fffa18",
+        "name": "Enable Data Update",
+        "mode": "link",
+        "links": [],
+        "x": 1300,
+        "y": 360,
+        "wires": [],
+        "l": true
+    },
+    {
+        "id": "aaf9cdd0666218d3",
+        "type": "link in",
+        "z": "f88c014770fffa18",
+        "name": "Receive Trigger: Update Drivers",
+        "links": [],
+        "x": 250,
+        "y": 460,
+        "wires": [
+            [
+                "0f13251936bdfae9"
+            ]
+        ],
+        "l": true
+    },
+    {
+        "id": "0f13251936bdfae9",
+        "type": "link call",
+        "z": "f88c014770fffa18",
+        "name": "Call: API Drivers Standings",
+        "links": [
+            "aaf9cdd0666218d3"
+        ],
+        "linkType": "static",
+        "timeout": "30",
+        "x": 560,
+        "y": 460,
+        "wires": [
+            [
+                "6962adb379b85fb9"
+            ]
+        ]
+    },
+    {
+        "id": "6962adb379b85fb9",
+        "type": "function",
+        "z": "f88c014770fffa18",
+        "name": "Format Drivers Table",
+        "func": "try {\n    const standings = msg.payload.MRData.StandingsTable.StandingsLists[0].DriverStandings;\n    \n    // const top10 = standings.slice(0, 10);\n    \n    msg.payload = standings.map(driver => ({\n        \"Pos\": driver.position,\n        \"Driver\": `${driver.Driver.givenName} ${driver.Driver.familyName}`,\n        \"Nationality\": driver.Driver.nationality,\n        \"Team\": driver.Constructors[0].name,\n        \"Points\": driver.points,\n        \"Wins\": driver.wins\n    }));\n    \n    flow.set(\"driversData\", msg.payload);\n    \n    return msg;\n} catch(error) {\n    node.error(\"Error formatting driver data: \" + error.message, msg);\n    return null;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 460,
+        "wires": [
+            [
+                "d05ef981503790b3"
+            ]
+        ]
+    },
+    {
+        "id": "d05ef981503790b3",
+        "type": "ui-table",
+        "z": "f88c014770fffa18",
+        "group": "ff59f358f3a6cead",
+        "name": "Drivers Rankings",
+        "label": "",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "maxrows": 0,
+        "passthru": false,
+        "autocols": true,
+        "showSearch": true,
+        "deselect": true,
+        "selectionType": "none",
+        "columns": [],
+        "mobileBreakpoint": "sm",
+        "mobileBreakpointType": "defaults",
+        "action": "append",
+        "className": "",
+        "x": 1050,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "03866207b58a2bd9",
+        "type": "catch",
+        "z": "f88c014770fffa18",
+        "name": "Capture Error: Driver Standing",
+        "scope": [
+            "aaf9cdd0666218d3",
+            "0f13251936bdfae9",
+            "6962adb379b85fb9",
+            "d05ef981503790b3"
+        ],
+        "uncaught": false,
+        "x": 1280,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b5e278ae86790d71",
+        "type": "link in",
+        "z": "f88c014770fffa18",
+        "name": "Receive Trigger: Update Constructors",
+        "links": [],
+        "x": 270,
+        "y": 540,
+        "wires": [
+            [
+                "ba7072e09a875274"
+            ]
+        ],
+        "l": true
+    },
+    {
+        "id": "ba7072e09a875274",
+        "type": "link call",
+        "z": "f88c014770fffa18",
+        "name": "Call: API Constructors Standings",
+        "links": [
+            "b5e278ae86790d71"
+        ],
+        "linkType": "static",
+        "timeout": "30",
+        "x": 570,
+        "y": 540,
+        "wires": [
+            [
+                "ea2f8085fb69a3fa"
+            ]
+        ]
+    },
+    {
+        "id": "ea2f8085fb69a3fa",
+        "type": "function",
+        "z": "f88c014770fffa18",
+        "name": "Format Constructors Table",
+        "func": "try {\n    const standings = msg.payload.MRData.StandingsTable.StandingsLists[0].ConstructorStandings;\n    \n    const top5 = standings.slice(0, 5);\n    \n    // chart.js Format\n    const labels = top5.map(c => c.Constructor.name);\n    const data = top5.map(c => parseInt(c.points));\n    \n    msg.payload = [{\n        series: [\"Points\"],\n        data: [data],\n        labels: labels\n    }];\n    \n    flow.set(\"constructorsData\", standings);\n    \n    return msg;\n} catch(error) {\n    node.error(\"Error formatting constructor data: \" + error.message, msg);\n    return null;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 540,
+        "wires": [
+            [
+                "b21387216e30491f"
+            ]
+        ]
+    },
+    {
+        "id": "b21387216e30491f",
+        "type": "ui-chart",
+        "z": "f88c014770fffa18",
+        "group": "ff59f358f3a6cead",
+        "name": "Top 5 Constructors Chart",
+        "label": "Top 5 Constructors Points",
+        "order": 2,
+        "chartType": "line",
+        "category": "topic",
+        "categoryType": "msg",
+        "xAxisLabel": "",
+        "xAxisProperty": "",
+        "xAxisPropertyType": "timestamp",
+        "xAxisType": "time",
+        "xAxisFormat": "",
+        "xAxisFormatType": "auto",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "",
+        "yAxisProperty": "payload",
+        "yAxisPropertyType": "msg",
+        "ymin": "",
+        "ymax": "",
+        "bins": 10,
+        "action": "append",
+        "stackSeries": false,
+        "pointShape": "circle",
+        "pointRadius": 4,
+        "showLegend": true,
+        "removeOlder": 1,
+        "removeOlderUnit": "3600",
+        "removeOlderPoints": "",
+        "colors": [
+            "#0095ff",
+            "#ff0000",
+            "#ff7f0e",
+            "#2ca02c",
+            "#a347e1",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "textColor": [
+            "#666666"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e5e5e5"
+        ],
+        "gridColorDefault": true,
+        "width": 6,
+        "height": 8,
+        "className": "",
+        "interpolation": "linear",
+        "x": 1110,
+        "y": 540,
         "wires": [
             []
         ]
