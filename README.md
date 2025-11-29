@@ -7,8 +7,8 @@ Ré, Lautaro Caupolicán
 
 ## Descripción
 Aplicación web que consume la API pública jolpica-f1 para mostrar:
-- Clasificación de pilotos (top 10)
-- Clasificación de constructores (gráfico top 5)
+- Clasificación de pilotos (top 10, paginado y con buscador)
+- Clasificación de constructores (gráfico top 5, paginado y con buscador)
 - Calendario de carreras de la temporada
 - Información de la próxima carrera
 
@@ -19,23 +19,20 @@ Aplicación web que consume la API pública jolpica-f1 para mostrar:
 - Interfaz responsive
 
 ## Variables de Entorno
-Configuradas en `settings.js` bajo `functionGlobalContext`:
-
 - `API_BASE_URL`: https://api.jolpi.ca/ergast/f1
 - `CURRENT_SEASON`: 2025
 - `REQUEST_LIMIT`: 30
 - `CACHE_DURATION`: 300000 (5 minutos)
 
 ## Dependencias
-- node-red-dashboard: UI del dashboard
-- node-red-contrib-moment: Manejo de fechas
+- @flowfuse/node-red-dashboard: UI del dashboard
 
 ## Instalación
 1. Clonar repositorio
 2. Abrir Node-RED
 3. Importar proyecto desde Projects
 4. Instalar dependencias desde Manage Palette
-5. Acceder al dashboard en http://localhost:1880/ui
+5. Acceder al dashboard en http://localhost:1880/dashboard
 
 ## Estructura
 - **[MAIN]**: Interfaz principal y lógica de presentación
@@ -54,5 +51,4 @@ jolpica-f1 (https://api.jolpi.ca)
 - Log persistente en flow context
 
 ## Notas
-- Rate limit de API: 4 req/s, 500 req/hora
 - Dashboard optimizado para 1920x1080
