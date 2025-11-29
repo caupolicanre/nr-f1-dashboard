@@ -15,7 +15,6 @@ Aplicación web que consume la API pública jolpica-f1 para mostrar:
 ## Funcionalidades
 - Selector de temporada (1950-presente)
 - Actualización manual de datos
-- Sistema de caché (5 minutos)
 - Manejo centralizado de errores
 - Interfaz responsive
 
@@ -41,7 +40,6 @@ Configuradas en `settings.js` bajo `functionGlobalContext`:
 ## Estructura
 - **[MAIN]**: Interfaz principal y lógica de presentación
 - **[API]**: Subflujos para consumo de API (modularizados)
-- **[CACHE]**: Sistema de caché temporal
 - **[ERROR]**: Manejo centralizado de errores con Catch nodes
 
 ## API Utilizada
@@ -56,6 +54,5 @@ jolpica-f1 (https://api.jolpi.ca)
 - Log persistente en flow context
 
 ## Notas
-- Los datos se cachean por 5 minutos para reducir requests
 - Rate limit de API: 4 req/s, 500 req/hora
 - Dashboard optimizado para 1920x1080
