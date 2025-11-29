@@ -4,31 +4,23 @@
         "type": "tab",
         "label": "[MAIN] Main Dashboard",
         "disabled": false,
-        "info": "UI y controles",
+        "info": "UI and controls",
         "env": []
     },
     {
         "id": "87ca60d59ad0dd2c",
         "type": "tab",
-        "label": "[API] Servicios API",
+        "label": "[API] API Services",
         "disabled": false,
-        "info": "Subflujos para consumo de API",
-        "env": []
-    },
-    {
-        "id": "9b765c4fbc87132b",
-        "type": "tab",
-        "label": "[CACHE] Sistema de Caché",
-        "disabled": false,
-        "info": "Manejo de caché temporal",
+        "info": "Subflows for API consumption",
         "env": []
     },
     {
         "id": "04ac14f2e958fc57",
         "type": "tab",
-        "label": "[ERROR] Manejo de Errores",
+        "label": "[ERROR] Error Handling",
         "disabled": false,
-        "info": "Centralización de errores",
+        "info": "Centralized error handling",
         "env": []
     },
     {
@@ -61,7 +53,7 @@
     {
         "id": "49208b2957f9d1f6",
         "type": "ui-base",
-        "name": "My Dashboard",
+        "name": "F1 Dashboard",
         "path": "/dashboard",
         "appIcon": "",
         "includeClientData": true,
@@ -74,20 +66,20 @@
         "navigationStyle": "default",
         "titleBarStyle": "default",
         "showReconnectNotification": true,
-        "notificationDisplayTime": 1,
+        "notificationDisplayTime": 3,
         "showDisconnectNotification": true,
         "allowInstall": false
     },
     {
         "id": "185767feb2ec6bb6",
         "type": "ui-theme",
-        "name": "Default Theme",
+        "name": "F1 Theme",
         "colors": {
             "surface": "#ffffff",
-            "primary": "#0094CE",
-            "bgPage": "#eeeeee",
-            "groupBg": "#ffffff",
-            "groupOutline": "#cccccc"
+            "primary": "#E10600",
+            "bgPage": "#1a1a1a",
+            "groupBg": "#2d2d2d",
+            "groupOutline": "#E10600"
         },
         "sizes": {
             "density": "default",
@@ -100,7 +92,7 @@
     {
         "id": "c90405128576a103",
         "type": "ui-page",
-        "name": "Dashboard",
+        "name": "F1 Live Dashboard",
         "ui": "49208b2957f9d1f6",
         "path": "/home",
         "icon": "home",
@@ -138,8 +130,8 @@
         "type": "ui-group",
         "name": "Control Panel",
         "page": "c90405128576a103",
-        "width": 6,
-        "height": 1,
+        "width": "6",
+        "height": "1",
         "order": 1,
         "showTitle": true,
         "className": "",
@@ -150,14 +142,28 @@
     {
         "id": "ff59f358f3a6cead",
         "type": "ui-group",
-        "name": "Rankings",
+        "name": "Championship Standings",
         "page": "c90405128576a103",
-        "width": 6,
-        "height": 1,
+        "width": "12",
+        "height": "1",
         "order": 2,
         "showTitle": true,
         "className": "",
-        "visible": true,
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "8f3a5b2c9d4e1f67",
+        "type": "ui-group",
+        "name": "Race Calendar",
+        "page": "c90405128576a103",
+        "width": "12",
+        "height": "1",
+        "order": 3,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
         "disabled": "false",
         "groupType": "default"
     },
@@ -165,20 +171,30 @@
         "id": "0d36c34a1feaf846",
         "type": "comment",
         "z": "f88c014770fffa18",
-        "name": "Caupolicán Ré",
-        "info": "",
-        "x": 200,
-        "y": 260,
+        "name": "Author: Caupolicán Ré",
+        "info": "F1 Dashboard Project - Node-RED Course\nConsumes jolpica-f1 API",
+        "x": 180,
+        "y": 40,
         "wires": []
     },
     {
         "id": "e202e688a1931748",
         "type": "comment",
         "z": "f88c014770fffa18",
-        "name": "ENV_VARS",
-        "info": "VARIABLES DE ENTORNO:\n- API_BASE_URL: URL base de la API jolpica-f1\n- CURRENT_SEASON: Temporada actual por defecto\n- REQUEST_LIMIT: Límite de resultados por request\n- CACHE_DURATION: Duración del caché en ms (5 min)",
-        "x": 490,
-        "y": 260,
+        "name": "ENVIRONMENT VARIABLES",
+        "info": "ENVIRONMENT VARIABLES:\n- API_BASE_URL: Base URL of jolpica-f1 API\n- CURRENT_SEASON: Default current season\n- REQUEST_LIMIT: Result limit per request\n- CACHE_DURATION: Cache duration in ms (5 min)",
+        "x": 420,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "3e7d9a1b2c4f5e8d",
+        "type": "comment",
+        "z": "f88c014770fffa18",
+        "name": "FLOW 1: Season Selector and Control",
+        "info": "Initializes dashboard and manages season selection",
+        "x": 230,
+        "y": 140,
         "wires": []
     },
     {
@@ -193,13 +209,13 @@
         ],
         "repeat": "",
         "crontab": "",
-        "once": false,
+        "once": true,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "iso",
+        "payload": "",
         "payloadType": "date",
-        "x": 210,
-        "y": 360,
+        "x": 180,
+        "y": 180,
         "wires": [
             [
                 "4698ef61c3554efd"
@@ -210,16 +226,16 @@
         "id": "4698ef61c3554efd",
         "type": "function",
         "z": "f88c014770fffa18",
-        "name": "Configure Available Seasons",
-        "func": "// Generate list of seasons (1950 - present)\nconst currentYear = new Date().getFullYear();\nconst seasons = [];\n\nfor (let year = currentYear; year >= 1950; year--) {\n    seasons.push({\n        label: year.toString(),\n        value: year.toString()\n    });\n}\n\nmsg.options = seasons;\nmsg.payload = global.get(\"CURRENT_SEASON\") || currentYear.toString();\n\nreturn msg;",
+        "name": "Build Season Options",
+        "func": "// Generate list of seasons (1950 - present)\nconst currentYear = new Date().getFullYear();\nconst seasons = [];\n\nfor (let year = currentYear; year >= 1950; year--) {\n    seasons.push(year.toString());\n}\n\nmsg.options = seasons;\nmsg.payload = env.get(\"CURRENT_SEASON\") || currentYear.toString();\n\n// Set initial season in flow context\nflow.set(\"selectedSeason\", msg.payload);\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 560,
-        "y": 360,
+        "x": 400,
+        "y": 180,
         "wires": [
             [
                 "835975d334beda51"
@@ -231,31 +247,30 @@
         "type": "ui-dropdown",
         "z": "f88c014770fffa18",
         "group": "734bf468c0c53ee3",
-        "name": "Selector: F1 Season",
+        "name": "Season Selector",
         "label": "Season",
-        "tooltip": "",
+        "tooltip": "Select F1 Season (1950-present)",
         "order": 1,
-        "width": 0,
-        "height": 0,
+        "width": "3",
+        "height": "1",
         "passthru": false,
         "multiple": false,
         "chips": false,
         "clearable": false,
         "options": [
             {
-                "label": "options",
-                "value": "msg",
-                "type": "str"
+                "label": "",
+                "value": "options",
+                "type": "msg"
             }
         ],
         "payload": "",
-        "topic": "topic",
-        "topicType": "msg",
+        "topic": "season",
+        "topicType": "str",
         "className": "",
-        "typeIsComboBox": true,
-        "msgTrigger": "onChange",
-        "x": 820,
-        "y": 360,
+        "typeIsComboBox": false,
+        "x": 620,
+        "y": 180,
         "wires": [
             [
                 "1a86e92046fd35d7"
@@ -281,8 +296,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1060,
-        "y": 360,
+        "x": 840,
+        "y": 180,
         "wires": [
             [
                 "674bb2e6647b06e5"
@@ -293,22 +308,151 @@
         "id": "674bb2e6647b06e5",
         "type": "link out",
         "z": "f88c014770fffa18",
-        "name": "Enable Data Update",
+        "name": "Trigger Data Update",
         "mode": "link",
-        "links": [],
-        "x": 1300,
-        "y": 360,
+        "links": [
+            "5a2b3c4d5e6f7a8b"
+        ],
+        "x": 1080,
+        "y": 200,
         "wires": [],
         "l": true
+    },
+    {
+        "id": "9c8b7a6d5e4f3a2b",
+        "type": "ui-button",
+        "z": "f88c014770fffa18",
+        "group": "734bf468c0c53ee3",
+        "name": "Refresh Button",
+        "label": "Refresh Data",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "emulateClick": false,
+        "tooltip": "Manually refresh all data",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "refresh",
+        "iconPosition": "left",
+        "payload": "",
+        "payloadType": "date",
+        "topic": "refresh",
+        "topicType": "str",
+        "x": 620,
+        "y": 220,
+        "wires": [
+            [
+                "674bb2e6647b06e5"
+            ]
+        ]
+    },
+    {
+        "id": "5a2b3c4d5e6f7a8b",
+        "type": "link in",
+        "z": "f88c014770fffa18",
+        "name": "Receive Update Trigger",
+        "links": [
+            "674bb2e6647b06e5"
+        ],
+        "x": 180,
+        "y": 320,
+        "wires": [
+            [
+                "2b3c4d5e6f7a8b9c"
+            ]
+        ],
+        "l": true
+    },
+    {
+        "id": "2b3c4d5e6f7a8b9c",
+        "type": "delay",
+        "z": "f88c014770fffa18",
+        "name": "Delay 100ms",
+        "pauseType": "delay",
+        "timeout": "100",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 390,
+        "y": 320,
+        "wires": [
+            [
+                "3c4d5e6f7a8b9c1d",
+                "4d5e6f7a8b9c1d2e",
+                "5e6f7a8b9c1d2e3f"
+            ]
+        ]
+    },
+    {
+        "id": "3c4d5e6f7a8b9c1d",
+        "type": "link out",
+        "z": "f88c014770fffa18",
+        "name": "Update Drivers",
+        "mode": "link",
+        "links": [
+            "aaf9cdd0666218d3"
+        ],
+        "x": 620,
+        "y": 300,
+        "wires": [],
+        "l": true
+    },
+    {
+        "id": "4d5e6f7a8b9c1d2e",
+        "type": "link out",
+        "z": "f88c014770fffa18",
+        "name": "Update Constructors",
+        "mode": "link",
+        "links": [
+            "b5e278ae86790d71"
+        ],
+        "x": 640,
+        "y": 340,
+        "wires": [],
+        "l": true
+    },
+    {
+        "id": "5e6f7a8b9c1d2e3f",
+        "type": "link out",
+        "z": "f88c014770fffa18",
+        "name": "Update Calendar",
+        "mode": "link",
+        "links": [
+            "6f7a8b9c1d2e3f4a"
+        ],
+        "x": 630,
+        "y": 380,
+        "wires": [],
+        "l": true
+    },
+    {
+        "id": "7a8b9c1d2e3f4a5b",
+        "type": "comment",
+        "z": "f88c014770fffa18",
+        "name": "FLOW 2: Driver Standings Display",
+        "info": "Fetches and displays driver championship standings",
+        "x": 220,
+        "y": 460,
+        "wires": []
     },
     {
         "id": "aaf9cdd0666218d3",
         "type": "link in",
         "z": "f88c014770fffa18",
-        "name": "Receive Trigger: Update Drivers",
-        "links": [],
-        "x": 250,
-        "y": 460,
+        "name": "Receive: Update Drivers",
+        "links": [
+            "3c4d5e6f7a8b9c1d"
+        ],
+        "x": 190,
+        "y": 500,
         "wires": [
             [
                 "0f13251936bdfae9"
@@ -320,14 +464,14 @@
         "id": "0f13251936bdfae9",
         "type": "link call",
         "z": "f88c014770fffa18",
-        "name": "Call: API Drivers Standings",
+        "name": "Call: Driver Standings API",
         "links": [
-            "aaf9cdd0666218d3"
+            "1b2c3d4e5f6a7b8c"
         ],
         "linkType": "static",
         "timeout": "30",
-        "x": 560,
-        "y": 460,
+        "x": 450,
+        "y": 500,
         "wires": [
             [
                 "6962adb379b85fb9"
@@ -338,16 +482,16 @@
         "id": "6962adb379b85fb9",
         "type": "function",
         "z": "f88c014770fffa18",
-        "name": "Format Drivers Table",
-        "func": "try {\n    const standings = msg.payload.MRData.StandingsTable.StandingsLists[0].DriverStandings;\n    \n    // const top10 = standings.slice(0, 10);\n    \n    msg.payload = standings.map(driver => ({\n        \"Pos\": driver.position,\n        \"Driver\": `${driver.Driver.givenName} ${driver.Driver.familyName}`,\n        \"Nationality\": driver.Driver.nationality,\n        \"Team\": driver.Constructors[0].name,\n        \"Points\": driver.points,\n        \"Wins\": driver.wins\n    }));\n    \n    flow.set(\"driversData\", msg.payload);\n    \n    return msg;\n} catch(error) {\n    node.error(\"Error formatting driver data: \" + error.message, msg);\n    return null;\n}",
+        "name": "Format Driver Table Data",
+        "func": "try {\n    const response = msg.payload;\n    \n    if (!response || !response.MRData) {\n        throw new Error(\"Invalid API response\");\n    }\n    \n    const standings = response.MRData.StandingsTable.StandingsLists[0].DriverStandings;\n    \n    // Format data for table\n    msg.payload = standings.map(driver => ({\n        \"Pos\": driver.position,\n        \"Driver\": `${driver.Driver.givenName} ${driver.Driver.familyName}`,\n        \"Nationality\": driver.Driver.nationality,\n        \"Team\": driver.Constructors[0].name,\n        \"Points\": driver.points,\n        \"Wins\": driver.wins\n    }));\n    \n    // Store in flow context for reference\n    flow.set(\"driversData\", msg.payload);\n    \n    node.status({fill:\"green\", shape:\"dot\", text:`${standings.length} drivers loaded`});\n    \n    return msg;\n} catch(error) {\n    node.error(\"Error formatting driver data: \" + error.message, msg);\n    msg.error = {\n        message: error.message,\n        source: \"Format Driver Table\",\n        timestamp: new Date().toISOString()\n    };\n    return null;\n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 820,
-        "y": 460,
+        "x": 730,
+        "y": 500,
         "wires": [
             [
                 "d05ef981503790b3"
@@ -359,24 +503,18 @@
         "type": "ui-table",
         "z": "f88c014770fffa18",
         "group": "ff59f358f3a6cead",
-        "name": "Drivers Rankings",
-        "label": "",
+        "name": "Driver Standings Table",
+        "label": "Driver Championship",
         "order": 1,
-        "width": 0,
-        "height": 0,
+        "width": "6",
+        "height": "8",
         "maxrows": 0,
         "passthru": false,
         "autocols": true,
-        "showSearch": true,
-        "deselect": true,
         "selectionType": "none",
         "columns": [],
-        "mobileBreakpoint": "sm",
-        "mobileBreakpointType": "defaults",
-        "action": "append",
-        "className": "",
-        "x": 1050,
-        "y": 460,
+        "x": 1040,
+        "y": 500,
         "wires": [
             []
         ]
@@ -385,28 +523,55 @@
         "id": "03866207b58a2bd9",
         "type": "catch",
         "z": "f88c014770fffa18",
-        "name": "Capture Error: Driver Standing",
+        "name": "Catch: Driver Standings Error",
         "scope": [
-            "aaf9cdd0666218d3",
             "0f13251936bdfae9",
             "6962adb379b85fb9",
             "d05ef981503790b3"
         ],
         "uncaught": false,
-        "x": 1280,
-        "y": 460,
+        "x": 1020,
+        "y": 540,
         "wires": [
-            []
+            [
+                "8b9c1d2e3f4a5b6c"
+            ]
         ]
+    },
+    {
+        "id": "8b9c1d2e3f4a5b6c",
+        "type": "link out",
+        "z": "f88c014770fffa18",
+        "name": "Send to Error Handler",
+        "mode": "link",
+        "links": [
+            "9c1d2e3f4a5b6c7d"
+        ],
+        "x": 1390,
+        "y": 680,
+        "wires": [],
+        "l": true
+    },
+    {
+        "id": "9d1e2f3a4b5c6d7e",
+        "type": "comment",
+        "z": "f88c014770fffa18",
+        "name": "FLOW 3: Constructor Standings Display",
+        "info": "Fetches and displays constructor championship standings",
+        "x": 230,
+        "y": 640,
+        "wires": []
     },
     {
         "id": "b5e278ae86790d71",
         "type": "link in",
         "z": "f88c014770fffa18",
-        "name": "Receive Trigger: Update Constructors",
-        "links": [],
-        "x": 270,
-        "y": 540,
+        "name": "Receive: Update Constructors",
+        "links": [
+            "4d5e6f7a8b9c1d2e"
+        ],
+        "x": 200,
+        "y": 680,
         "wires": [
             [
                 "ba7072e09a875274"
@@ -418,14 +583,14 @@
         "id": "ba7072e09a875274",
         "type": "link call",
         "z": "f88c014770fffa18",
-        "name": "Call: API Constructors Standings",
+        "name": "Call: Constructor Standings API",
         "links": [
-            "b5e278ae86790d71"
+            "2c3d4e5f6a7b8c9d"
         ],
         "linkType": "static",
         "timeout": "30",
-        "x": 570,
-        "y": 540,
+        "x": 470,
+        "y": 680,
         "wires": [
             [
                 "ea2f8085fb69a3fa"
@@ -436,16 +601,16 @@
         "id": "ea2f8085fb69a3fa",
         "type": "function",
         "z": "f88c014770fffa18",
-        "name": "Format Constructors Table",
-        "func": "try {\n    const standings = msg.payload.MRData.StandingsTable.StandingsLists[0].ConstructorStandings;\n    \n    const top5 = standings.slice(0, 5);\n    \n    // chart.js Format\n    const labels = top5.map(c => c.Constructor.name);\n    const data = top5.map(c => parseInt(c.points));\n    \n    msg.payload = [{\n        series: [\"Points\"],\n        data: [data],\n        labels: labels\n    }];\n    \n    flow.set(\"constructorsData\", standings);\n    \n    return msg;\n} catch(error) {\n    node.error(\"Error formatting constructor data: \" + error.message, msg);\n    return null;\n}",
+        "name": "Format Constructor Chart Data",
+        "func": "try {\n    const response = msg.payload;\n    \n    if (!response || !response.MRData) {\n        throw new Error(\"Invalid API response\");\n    }\n    \n    const standings = response.MRData.StandingsTable.StandingsLists[0].ConstructorStandings;\n    \n    // Store all data\n    flow.set(\"constructorsData\", standings);\n    \n    // Prepare data for chart (top 10)\n    const top10 = standings.slice(0, 10);\n    \n    msg.payload = top10.map(constructor => ({\n        \"Pos\": constructor.position,\n        \"Team\": constructor.Constructor.name,\n        \"Nationality\": constructor.Constructor.nationality,\n        \"Points\": constructor.points,\n        \"Wins\": constructor.wins\n    }));\n    \n    node.status({fill:\"green\", shape:\"dot\", text:`${standings.length} teams loaded`});\n    \n    return msg;\n} catch(error) {\n    node.error(\"Error formatting constructor data: \" + error.message, msg);\n    msg.error = {\n        message: error.message,\n        source: \"Format Constructor Chart\",\n        timestamp: new Date().toISOString()\n    };\n    return null;\n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 840,
-        "y": 540,
+        "x": 750,
+        "y": 680,
         "wires": [
             [
                 "b21387216e30491f"
@@ -454,64 +619,675 @@
     },
     {
         "id": "b21387216e30491f",
-        "type": "ui-chart",
+        "type": "ui-table",
         "z": "f88c014770fffa18",
         "group": "ff59f358f3a6cead",
-        "name": "Top 5 Constructors Chart",
-        "label": "Top 5 Constructors Points",
+        "name": "Constructor Standings Table",
+        "label": "Constructor Championship",
         "order": 2,
-        "chartType": "line",
-        "category": "topic",
-        "categoryType": "msg",
-        "xAxisLabel": "",
-        "xAxisProperty": "",
-        "xAxisPropertyType": "timestamp",
-        "xAxisType": "time",
-        "xAxisFormat": "",
-        "xAxisFormatType": "auto",
-        "xmin": "",
-        "xmax": "",
-        "yAxisLabel": "",
-        "yAxisProperty": "payload",
-        "yAxisPropertyType": "msg",
-        "ymin": "",
-        "ymax": "",
-        "bins": 10,
-        "action": "append",
-        "stackSeries": false,
-        "pointShape": "circle",
-        "pointRadius": 4,
-        "showLegend": true,
-        "removeOlder": 1,
-        "removeOlderUnit": "3600",
-        "removeOlderPoints": "",
-        "colors": [
-            "#0095ff",
-            "#ff0000",
-            "#ff7f0e",
-            "#2ca02c",
-            "#a347e1",
-            "#d62728",
-            "#ff9896",
-            "#9467bd",
-            "#c5b0d5"
-        ],
-        "textColor": [
-            "#666666"
-        ],
-        "textColorDefault": true,
-        "gridColor": [
-            "#e5e5e5"
-        ],
-        "gridColorDefault": true,
-        "width": 6,
-        "height": 8,
-        "className": "",
-        "interpolation": "linear",
-        "x": 1110,
-        "y": 540,
+        "width": "6",
+        "height": "8",
+        "maxrows": 0,
+        "passthru": false,
+        "autocols": true,
+        "selectionType": "none",
+        "columns": [],
+        "x": 1020,
+        "y": 680,
         "wires": [
             []
         ]
+    },
+    {
+        "id": "1e2f3a4b5c6d7e8f",
+        "type": "catch",
+        "z": "f88c014770fffa18",
+        "name": "Catch: Constructor Standings Error",
+        "scope": [
+            "ba7072e09a875274",
+            "ea2f8085fb69a3fa",
+            "b21387216e30491f"
+        ],
+        "uncaught": false,
+        "x": 1000,
+        "y": 720,
+        "wires": [
+            [
+                "8b9c1d2e3f4a5b6c"
+            ]
+        ]
+    },
+    {
+        "id": "2f3a4b5c6d7e8f9a",
+        "type": "comment",
+        "z": "f88c014770fffa18",
+        "name": "FLOW 4: Race Calendar Display",
+        "info": "Fetches and displays race calendar with next race highlight",
+        "x": 210,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "6f7a8b9c1d2e3f4a",
+        "type": "link in",
+        "z": "f88c014770fffa18",
+        "name": "Receive: Update Calendar",
+        "links": [
+            "5e6f7a8b9c1d2e3f"
+        ],
+        "x": 190,
+        "y": 860,
+        "wires": [
+            [
+                "7a8b9c1d2e3f4a5b1"
+            ]
+        ],
+        "l": true
+    },
+    {
+        "id": "7a8b9c1d2e3f4a5b1",
+        "type": "link call",
+        "z": "f88c014770fffa18",
+        "name": "Call: Races API",
+        "links": [
+            "3d4e5f6a7b8c9d1e"
+        ],
+        "linkType": "static",
+        "timeout": "30",
+        "x": 420,
+        "y": 860,
+        "wires": [
+            [
+                "8a9b1c2d3e4f5a6b"
+            ]
+        ]
+    },
+    {
+        "id": "8a9b1c2d3e4f5a6b",
+        "type": "function",
+        "z": "f88c014770fffa18",
+        "name": "Format Calendar Data",
+        "func": "try {\n    const response = msg.payload;\n    \n    if (!response || !response.MRData) {\n        throw new Error(\"Invalid API response\");\n    }\n    \n    const races = response.MRData.RaceTable.Races;\n    const now = new Date();\n    \n    // Find next race\n    let nextRace = null;\n    for (let race of races) {\n        const raceDate = new Date(race.date + 'T' + (race.time || '00:00:00'));\n        if (raceDate > now) {\n            nextRace = race;\n            break;\n        }\n    }\n    \n    // Format race list\n    const racesList = races.map(race => {\n        const raceDate = new Date(race.date + 'T' + (race.time || '00:00:00'));\n        const isPast = raceDate < now;\n        const isNext = race === nextRace;\n        let status = \"○\";\n        if (isPast) status = \"✓\";\n        if (isNext) status = \"➤\";\n        \n        return {\n            \"Round\": status + \" \" + race.round,\n            \"Race\": race.raceName,\n            \"Circuit\": race.Circuit.circuitName,\n            \"Location\": `${race.Circuit.Location.locality}, ${race.Circuit.Location.country}`,\n            \"Date\": race.date\n        };\n    });\n    \n    // Prepare outputs\n    const calendarMsg = { payload: racesList };\n    const nextRaceMsg = { payload: nextRace || { raceName: \"No upcoming races\" } };\n    \n    flow.set(\"racesData\", races);\n    flow.set(\"nextRace\", nextRace);\n    \n    node.status({fill:\"green\", shape:\"dot\", text:`${races.length} races loaded`});\n    \n    return [calendarMsg, nextRaceMsg];\n} catch(error) {\n    node.error(\"Error formatting calendar data: \" + error.message, msg);\n    msg.error = {\n        message: error.message,\n        source: \"Format Calendar\",\n        timestamp: new Date().toISOString()\n    };\n    return null;\n}",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 860,
+        "wires": [
+            [
+                "9b1c2d3e4f5a6b7c"
+            ],
+            [
+                "1c2d3e4f5a6b7c8d"
+            ]
+        ]
+    },
+    {
+        "id": "9b1c2d3e4f5a6b7c",
+        "type": "ui-table",
+        "z": "f88c014770fffa18",
+        "group": "8f3a5b2c9d4e1f67",
+        "name": "Race Calendar Table",
+        "label": "Season Calendar",
+        "order": 2,
+        "width": "12",
+        "height": "6",
+        "maxrows": 0,
+        "passthru": false,
+        "autocols": true,
+        "selectionType": "none",
+        "columns": [],
+        "x": 860,
+        "y": 860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1c2d3e4f5a6b7c8d",
+        "type": "function",
+        "z": "f88c014770fffa18",
+        "name": "Format Next Race Card",
+        "func": "try {\n    const race = msg.payload;\n    \n    if (!race || !race.raceName) {\n        msg.payload = '<h3>No upcoming races</h3>';\n        return msg;\n    }\n    \n    const raceDate = new Date(race.date + 'T' + (race.time || '00:00:00'));\n    const dateStr = raceDate.toLocaleDateString('en-US', { \n        weekday: 'long', \n        year: 'numeric', \n        month: 'long', \n        day: 'numeric' \n    });\n    \n    msg.payload = `\n        <div style=\"padding: 10px;\">\n            <h2 style=\"margin: 0 0 10px 0; color: #E10600;\">🏁 NEXT RACE</h2>\n            <h3 style=\"margin: 0 5px 0;\">${race.raceName}</h3>\n            <p style=\"margin: 5px 0;\"><strong>Circuit:</strong> ${race.Circuit.circuitName}</p>\n            <p style=\"margin: 5px 0;\"><strong>Location:</strong> ${race.Circuit.Location.locality}, ${race.Circuit.Location.country}</p>\n            <p style=\"margin: 5px 0;\"><strong>Date:</strong> ${dateStr}</p>\n            <p style=\"margin: 5px 0;\"><strong>Round:</strong> ${race.round}</p>\n        </div>\n    `;\n    \n    return msg;\n} catch(error) {\n    msg.payload = '<h3>Error loading next race</h3>';\n    return msg;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 920,
+        "wires": [
+            [
+                "2d3e4f5a6b7c8d9e"
+            ]
+        ]
+    },
+    {
+        "id": "2d3e4f5a6b7c8d9e",
+        "type": "ui-template",
+        "z": "f88c014770fffa18",
+        "group": "8f3a5b2c9d4e1f67",
+        "name": "Next Race Card",
+        "order": 1,
+        "width": "12",
+        "height": "3",
+        "format": "<template>\n    <div v-html=\"msg.payload\"></div>\n</template>",
+        "storeOutMessages": true,
+        "passthru": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 880,
+        "y": 920,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3e4f5a6b7c8d9e1f",
+        "type": "catch",
+        "z": "f88c014770fffa18",
+        "name": "Catch: Calendar Error",
+        "scope": [
+            "7a8b9c1d2e3f4a5b1",
+            "8a9b1c2d3e4f5a6b",
+            "1c2d3e4f5a6b7c8d"
+        ],
+        "uncaught": false,
+        "x": 860,
+        "y": 960,
+        "wires": [
+            [
+                "8b9c1d2e3f4a5b6c"
+            ]
+        ]
+    },
+    {
+        "id": "4f5a6b7c8d9e1f2a",
+        "type": "comment",
+        "z": "87ca60d59ad0dd2c",
+        "name": "API Services - Subflows for API consumption",
+        "info": "Contains subflows for each API endpoint",
+        "x": 230,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "1b2c3d4e5f6a7b8c",
+        "type": "link in",
+        "z": "87ca60d59ad0dd2c",
+        "name": "API: Get Driver Standings",
+        "links": [],
+        "x": 190,
+        "y": 100,
+        "wires": [
+            [
+                "5a6b7c8d9e1f2a3b"
+            ]
+        ],
+        "l": true
+    },
+    {
+        "id": "5a6b7c8d9e1f2a3b",
+        "type": "function",
+        "z": "87ca60d59ad0dd2c",
+        "name": "Build Driver Standings URL",
+        "func": "const baseUrl = env.get('API_BASE_URL');\nconst season = msg.payload.season || flow.get('selectedSeason') || env.get('CURRENT_SEASON');\nconst limit = env.get('REQUEST_LIMIT');\n\nmsg.url = `${baseUrl}/${season}/driverstandings.json?limit=${limit}`;\nmsg.season = season;\nmsg.endpoint = 'driverstandings';\n\nnode.status({fill:'blue', shape:'ring', text:`Fetching ${season} driver standings`});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 100,
+        "wires": [
+            [
+                "6b7c8d9e1f2a3b4c"
+            ]
+        ]
+    },
+    {
+        "id": "6b7c8d9e1f2a3b4c",
+        "type": "http request",
+        "z": "87ca60d59ad0dd2c",
+        "name": "Request: Jolpica API",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 740,
+        "y": 100,
+        "wires": [
+            [
+                "7c8d9e1f2a3b4c5d"
+            ]
+        ]
+    },
+    {
+        "id": "7c8d9e1f2a3b4c5d",
+        "type": "function",
+        "z": "87ca60d59ad0dd2c",
+        "name": "Validate API Response",
+        "func": "try {\n    if (!msg.payload || !msg.payload.MRData) {\n        throw new Error('Invalid API response structure');\n    }\n    \n    const total = msg.payload.MRData.total;\n    \n    if (total === '0' || total === 0) {\n        throw new Error(`No data available for season ${msg.season}`);\n    }\n    \n    node.status({fill:'green', shape:'dot', text:`${total} drivers retrieved`});\n    \n    return msg;\n} catch(error) {\n    node.error(error.message, msg);\n    msg.error = {\n        message: error.message,\n        source: 'Driver Standings API',\n        timestamp: new Date().toISOString(),\n        season: msg.season\n    };\n    node.status({fill:'red', shape:'ring', text:'API Error'});\n    return null;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1020,
+        "y": 100,
+        "wires": [
+            [
+                "8d9e1f2a3b4c5d6e"
+            ]
+        ]
+    },
+    {
+        "id": "8d9e1f2a3b4c5d6e",
+        "type": "link out",
+        "z": "87ca60d59ad0dd2c",
+        "name": "Return Driver Standings",
+        "mode": "return",
+        "links": [],
+        "x": 1270,
+        "y": 120,
+        "wires": [],
+        "l": true
+    },
+    {
+        "id": "9e1f2a3b4c5d6e7f",
+        "type": "catch",
+        "z": "87ca60d59ad0dd2c",
+        "name": "Catch: Driver API Error",
+        "scope": [
+            "6b7c8d9e1f2a3b4c",
+            "7c8d9e1f2a3b4c5d"
+        ],
+        "uncaught": false,
+        "x": 740,
+        "y": 160,
+        "wires": [
+            [
+                "1f2a3b4c5d6e7f8a"
+            ]
+        ]
+    },
+    {
+        "id": "1f2a3b4c5d6e7f8a",
+        "type": "function",
+        "z": "87ca60d59ad0dd2c",
+        "name": "Format API Error",
+        "func": "msg.error = {\n    message: msg.error ? msg.error.message : \"Unknown API error\",\n    source: \"Driver Standings API\",\n    timestamp: new Date().toISOString(),\n    url: msg.url\n};\n\nnode.status({fill:\"red\", shape:\"ring\", text:\"Error\"});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1010,
+        "y": 160,
+        "wires": [
+            [
+                "8d9e1f2a3b4c5d6e"
+            ]
+        ]
+    },
+    {
+        "id": "2c3d4e5f6a7b8c9d",
+        "type": "link in",
+        "z": "87ca60d59ad0dd2c",
+        "name": "API: Get Constructor Standings",
+        "links": [],
+        "x": 170,
+        "y": 240,
+        "wires": [
+            [
+                "3b4c5d6e7f8a9b1c"
+            ]
+        ],
+        "l": true
+    },
+    {
+        "id": "3b4c5d6e7f8a9b1c",
+        "type": "function",
+        "z": "87ca60d59ad0dd2c",
+        "name": "Build Constructor Standings URL",
+        "func": "const baseUrl = env.get('API_BASE_URL');\nconst season = msg.payload.season || flow.get('selectedSeason') || env.get('CURRENT_SEASON');\nconst limit = env.get('REQUEST_LIMIT');\n\nmsg.url = `${baseUrl}/${season}/constructorstandings.json?limit=${limit}`;\nmsg.season = season;\nmsg.endpoint = 'constructorstandings';\n\nnode.status({fill:'blue', shape:'ring', text:`Fetching ${season} constructor standings`});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 240,
+        "wires": [
+            [
+                "4c5d6e7f8a9b1c2d"
+            ]
+        ]
+    },
+    {
+        "id": "4c5d6e7f8a9b1c2d",
+        "type": "http request",
+        "z": "87ca60d59ad0dd2c",
+        "name": "Request: Jolpica API",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 740,
+        "y": 240,
+        "wires": [
+            [
+                "5d6e7f8a9b1c2d3e"
+            ]
+        ]
+    },
+    {
+        "id": "5d6e7f8a9b1c2d3e",
+        "type": "function",
+        "z": "87ca60d59ad0dd2c",
+        "name": "Validate API Response",
+        "func": "try {\n    if (!msg.payload || !msg.payload.MRData) {\n        throw new Error('Invalid API response structure');\n    }\n    \n    const total = msg.payload.MRData.total;\n    \n    if (total === '0' || total === 0) {\n        throw new Error(`No data available for season ${msg.season}`);\n    }\n    \n    node.status({fill:'green', shape:'dot', text:`${total} constructors retrieved`});\n    \n    return msg;\n} catch(error) {\n    node.error(error.message, msg);\n    msg.error = {\n        message: error.message,\n        source: 'Constructor Standings API',\n        timestamp: new Date().toISOString(),\n        season: msg.season\n    };\n    node.status({fill:'red', shape:'ring', text:'API Error'});\n    return null;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1020,
+        "y": 240,
+        "wires": [
+            [
+                "6e7f8a9b1c2d3e4f"
+            ]
+        ]
+    },
+    {
+        "id": "6e7f8a9b1c2d3e4f",
+        "type": "link out",
+        "z": "87ca60d59ad0dd2c",
+        "name": "Return Constructor Standings",
+        "mode": "return",
+        "links": [],
+        "x": 1290,
+        "y": 240,
+        "wires": [],
+        "l": true
+    },
+    {
+        "id": "7f8a9b1c2d3e4f5a",
+        "type": "catch",
+        "z": "87ca60d59ad0dd2c",
+        "name": "Catch: Constructor API Error",
+        "scope": [
+            "4c5d6e7f8a9b1c2d",
+            "5d6e7f8a9b1c2d3e"
+        ],
+        "uncaught": false,
+        "x": 720,
+        "y": 300,
+        "wires": [
+            [
+                "8a9b1c2d3e4f5a6b1"
+            ]
+        ]
+    },
+    {
+        "id": "8a9b1c2d3e4f5a6b1",
+        "type": "function",
+        "z": "87ca60d59ad0dd2c",
+        "name": "Format API Error",
+        "func": "msg.error = {\n    message: msg.error ? msg.error.message : \"Unknown API error\",\n    source: \"Constructor Standings API\",\n    timestamp: new Date().toISOString(),\n    url: msg.url\n};\n\nnode.status({fill:\"red\", shape:\"ring\", text:\"Error\"});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1010,
+        "y": 300,
+        "wires": [
+            [
+                "6e7f8a9b1c2d3e4f"
+            ]
+        ]
+    },
+    {
+        "id": "3d4e5f6a7b8c9d1e",
+        "type": "link in",
+        "z": "87ca60d59ad0dd2c",
+        "name": "API: Get Races",
+        "links": [],
+        "x": 220,
+        "y": 380,
+        "wires": [
+            [
+                "9b1c2d3e4f5a6b7c1"
+            ]
+        ],
+        "l": true
+    },
+    {
+        "id": "9b1c2d3e4f5a6b7c1",
+        "type": "function",
+        "z": "87ca60d59ad0dd2c",
+        "name": "Build Races URL",
+        "func": "const baseUrl = env.get('API_BASE_URL');\nconst season = msg.payload.season || flow.get('selectedSeason') || env.get('CURRENT_SEASON');\nconst limit = '100'; // Get all races for the season\n\nmsg.url = `${baseUrl}/${season}/races.json?limit=${limit}`;\nmsg.season = season;\nmsg.endpoint = 'races';\n\nnode.status({fill:'blue', shape:'ring', text:`Fetching ${season} races`});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 380,
+        "wires": [
+            [
+                "1c2d3e4f5a6b7c8d1"
+            ]
+        ]
+    },
+    {
+        "id": "1c2d3e4f5a6b7c8d1",
+        "type": "http request",
+        "z": "87ca60d59ad0dd2c",
+        "name": "Request: Jolpica API",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 740,
+        "y": 380,
+        "wires": [
+            [
+                "2d3e4f5a6b7c8d9e1"
+            ]
+        ]
+    },
+    {
+        "id": "2d3e4f5a6b7c8d9e1",
+        "type": "function",
+        "z": "87ca60d59ad0dd2c",
+        "name": "Validate API Response",
+        "func": "try {\n    if (!msg.payload || !msg.payload.MRData) {\n        throw new Error('Invalid API response structure');\n    }\n    \n    const total = msg.payload.MRData.total;\n    \n    if (total === '0' || total === 0) {\n        throw new Error(`No races available for season ${msg.season}`);\n    }\n    \n    node.status({fill:'green', shape:'dot', text:`${total} races retrieved`});\n    \n    return msg;\n} catch(error) {\n    node.error(error.message, msg);\n    msg.error = {\n        message: error.message,\n        source: 'Races API',\n        timestamp: new Date().toISOString(),\n        season: msg.season\n    };\n    node.status({fill:'red', shape:'ring', text:'API Error'});\n    return null;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1020,
+        "y": 380,
+        "wires": [
+            [
+                "3e4f5a6b7c8d9e1f1"
+            ]
+        ]
+    },
+    {
+        "id": "3e4f5a6b7c8d9e1f1",
+        "type": "link out",
+        "z": "87ca60d59ad0dd2c",
+        "name": "Return Races",
+        "mode": "return",
+        "links": [],
+        "x": 1250,
+        "y": 380,
+        "wires": [],
+        "l": true
+    },
+    {
+        "id": "4f5a6b7c8d9e1f2a1",
+        "type": "catch",
+        "z": "87ca60d59ad0dd2c",
+        "name": "Catch: Races API Error",
+        "scope": [
+            "1c2d3e4f5a6b7c8d1",
+            "2d3e4f5a6b7c8d9e1"
+        ],
+        "uncaught": false,
+        "x": 740,
+        "y": 440,
+        "wires": [
+            [
+                "5a6b7c8d9e1f2a3b1"
+            ]
+        ]
+    },
+    {
+        "id": "5a6b7c8d9e1f2a3b1",
+        "type": "function",
+        "z": "87ca60d59ad0dd2c",
+        "name": "Format API Error",
+        "func": "msg.error = {\n    message: msg.error ? msg.error.message : \"Unknown API error\",\n    source: \"Races API\",\n    timestamp: new Date().toISOString(),\n    url: msg.url\n};\n\nnode.status({fill:\"red\", shape:\"ring\", text:\"Error\"});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1010,
+        "y": 440,
+        "wires": [
+            [
+                "3e4f5a6b7c8d9e1f1"
+            ]
+        ]
+    },
+    {
+        "id": "9c1d2e3f4a5b6c7d",
+        "type": "link in",
+        "z": "04ac14f2e958fc57",
+        "name": "Receive Error",
+        "links": [
+            "8b9c1d2e3f4a5b6c"
+        ],
+        "x": 290,
+        "y": 120,
+        "wires": [
+            [
+                "1d2e3f4a5b6c7d8e"
+            ]
+        ],
+        "l": true
+    },
+    {
+        "id": "1d2e3f4a5b6c7d8e",
+        "type": "function",
+        "z": "04ac14f2e958fc57",
+        "name": "Process and Log Error",
+        "func": "const error = msg.error || {\n    message: msg.payload ? msg.payload.toString() : 'Unknown error',\n    source: 'Unknown',\n    timestamp: new Date().toISOString()\n};\n\n// Structured log\nconst errorLog = {\n    timestamp: error.timestamp,\n    source: error.source,\n    message: error.message,\n    season: error.season || msg.season || 'N/A',\n    url: error.url || msg.url || 'N/A'\n};\n\n// Store in flow context for audit\nlet errorHistory = flow.get('errorHistory') || [];\nerrorHistory.push(errorLog);\n\n// Keep only last 50 errors\nif (errorHistory.length > 50) {\n    errorHistory = errorHistory.slice(-50);\n}\n\nflow.set('errorHistory', errorHistory);\n\n// Prepare notification message\nmsg.payload = `⚠️ Error in ${error.source}: ${error.message}`;\nmsg.topic = 'error';\n\n// Log to Node-RED console\nnode.error(`[${error.source}] ${error.message}`, msg);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 120,
+        "wires": [
+            [
+                "2e3f4a5b6c7d8e9f",
+                "3f4a5b6c7d8e9f1a"
+            ]
+        ]
+    },
+    {
+        "id": "2e3f4a5b6c7d8e9f",
+        "type": "ui-notification",
+        "z": "04ac14f2e958fc57",
+        "ui": "49208b2957f9d1f6",
+        "position": "top right",
+        "colorDefault": true,
+        "color": "#ff0000",
+        "displayTime": "5",
+        "showCountdown": true,
+        "outputs": 0,
+        "allowDismiss": true,
+        "dismissText": "Close",
+        "allowConfirm": false,
+        "confirmText": "",
+        "raw": false,
+        "className": "",
+        "name": "Error Notification",
+        "x": 750,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "3f4a5b6c7d8e9f1a",
+        "type": "debug",
+        "z": "04ac14f2e958fc57",
+        "name": "Error Log",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 720,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "4a5b6c7d8e9f1a2b",
+        "type": "comment",
+        "z": "04ac14f2e958fc57",
+        "name": "Centralized Error Handler",
+        "info": "All errors from the application are routed here for:\n- Consistent logging\n- User notifications\n- Error history tracking (last 50 errors)",
+        "x": 210,
+        "y": 40,
+        "wires": []
     }
 ]
